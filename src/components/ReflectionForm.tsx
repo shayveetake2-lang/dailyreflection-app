@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { OVERALL_FEELING_OPTIONS, type OverallFeeling } from "../types";
@@ -11,10 +10,10 @@ interface ReflectionFormProps {
 }
 
 const FEELING_STYLES: Record<OverallFeeling, string> = {
-  great: "peer-checked:border-emerald-400 peer-checked:bg-emerald-50 dark:peer-checked:bg-emerald-950/40",
-  good: "peer-checked:border-blue-400 peer-checked:bg-blue-50 dark:peer-checked:bg-blue-950/40",
-  okay: "peer-checked:border-amber-400 peer-checked:bg-amber-50 dark:peer-checked:bg-amber-950/40",
-  bad: "peer-checked:border-rose-400 peer-checked:bg-rose-50 dark:peer-checked:bg-rose-950/40",
+  great: "peer-checked:border-emerald-400 peer-checked:bg-emerald-50 peer-checked:ring-2 peer-checked:ring-emerald-200 dark:peer-checked:bg-emerald-950/40 dark:peer-checked:ring-emerald-900",
+  good: "peer-checked:border-blue-400 peer-checked:bg-blue-50 peer-checked:ring-2 peer-checked:ring-blue-200 dark:peer-checked:bg-blue-950/40 dark:peer-checked:ring-blue-900",
+  okay: "peer-checked:border-amber-400 peer-checked:bg-amber-50 peer-checked:ring-2 peer-checked:ring-amber-200 dark:peer-checked:bg-amber-950/40 dark:peer-checked:ring-amber-900",
+  bad: "peer-checked:border-rose-400 peer-checked:bg-rose-50 peer-checked:ring-2 peer-checked:ring-rose-200 dark:peer-checked:bg-rose-950/40 dark:peer-checked:ring-rose-900",
 };
 
 function todayISODate() {
@@ -22,7 +21,7 @@ function todayISODate() {
 }
 
 const inputClasses =
-  "rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-slate-800 transition focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:outline-none dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-blue-900/40";
+  "rounded-lg border border-brand-200 bg-brand-50/40 px-3 py-2 text-brand-950 transition focus:border-brand-400 focus:ring-2 focus:ring-brand-100 focus:outline-none dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50 dark:focus:ring-brand-900/40";
 
 export function ReflectionForm({ defaultName, onSubmit, onNameChange }: ReflectionFormProps) {
   const [name, setName] = useState(defaultName);
@@ -65,10 +64,10 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
+      className="animate-fade-in flex flex-col gap-4 rounded-3xl border border-brand-100 bg-white/80 p-6 shadow-lg shadow-brand-900/5 backdrop-blur-sm transition hover:shadow-xl dark:border-brand-800 dark:bg-brand-900/80"
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-sm font-medium text-slate-600 dark:text-slate-300">
+        <label htmlFor="name" className="text-sm font-medium text-brand-700 dark:text-brand-200">
           Your name
         </label>
         <input
@@ -84,7 +83,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col gap-1">
-          <label htmlFor="date" className="text-sm font-medium text-slate-600 dark:text-slate-300">
+          <label htmlFor="date" className="text-sm font-medium text-brand-700 dark:text-brand-200">
             Date
           </label>
           <input
@@ -98,12 +97,12 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
         </div>
 
         <div className="flex flex-col gap-1">
-          <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Overall feeling</span>
+          <span className="text-sm font-medium text-brand-700 dark:text-brand-200">Overall feeling</span>
           <div className="grid grid-cols-4 gap-1.5">
             {OVERALL_FEELING_OPTIONS.map((option) => (
               <label
                 key={option.value}
-                className={`peer relative flex cursor-pointer items-center justify-center rounded-lg border border-slate-300 bg-slate-50 px-2 py-2 text-lg transition hover:scale-105 dark:border-slate-600 dark:bg-slate-900 ${FEELING_STYLES[option.value]}`}
+                className={`peer relative flex cursor-pointer items-center justify-center rounded-xl border border-brand-200 bg-brand-50/40 px-2 py-2.5 text-xl transition hover:scale-105 hover:shadow-sm dark:border-brand-700 dark:bg-brand-900 ${FEELING_STYLES[option.value]}`}
               >
                 <input
                   type="radio"
@@ -121,7 +120,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="whatDidYouDo" className="text-sm font-medium text-slate-600 dark:text-slate-300">
+        <label htmlFor="whatDidYouDo" className="text-sm font-medium text-brand-700 dark:text-brand-200">
           What did you do today?
         </label>
         <textarea
@@ -135,7 +134,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="howDidYouFeel" className="text-sm font-medium text-slate-600 dark:text-slate-300">
+        <label htmlFor="howDidYouFeel" className="text-sm font-medium text-brand-700 dark:text-brand-200">
           How did you feel about it?
         </label>
         <textarea
@@ -149,7 +148,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="notes" className="text-sm font-medium text-slate-600 dark:text-slate-300">
+        <label htmlFor="notes" className="text-sm font-medium text-brand-700 dark:text-brand-200">
           Optional notes
         </label>
         <textarea
@@ -164,7 +163,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
       <button
         type="submit"
         disabled={submitting}
-        className="mt-1 rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-1 rounded-lg bg-brand-600 px-4 py-2 font-medium text-white transition hover:bg-brand-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? "Saving…" : justSaved ? "✅ Saved!" : "Save reflection"}
       </button>

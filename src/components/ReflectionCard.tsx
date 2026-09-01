@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useState } from "react";
 import { OVERALL_FEELING_OPTIONS, type OverallFeeling, type Reflection } from "../types";
 import { copyReflectionForSlack, downloadReflection, mailtoReflection } from "../lib/share";
@@ -9,9 +8,9 @@ interface ReflectionCardProps {
 
 const FEELING_ACCENT: Record<OverallFeeling, string> = {
   great: "border-l-emerald-400",
-  good: "border-l-blue-400",
+  good: "border-l-brand-400",
   okay: "border-l-amber-400",
-  bad: "border-l-rose-400",
+  bad: "border-l-accent-600",
 };
 
 export function ReflectionCard({ reflection }: ReflectionCardProps) {
@@ -26,32 +25,32 @@ export function ReflectionCard({ reflection }: ReflectionCardProps) {
 
   return (
     <article
-      className={`animate-fade-in flex flex-col gap-3 rounded-2xl border border-l-4 border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 ${FEELING_ACCENT[reflection.overallFeeling]}`}
+      className={`animate-fade-in flex flex-col gap-3 rounded-2xl border border-l-4 border-brand-100 bg-white/80 p-5 shadow-md shadow-brand-900/5 backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-brand-800 dark:bg-brand-900/80 ${FEELING_ACCENT[reflection.overallFeeling]}`}
     >
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-semibold text-slate-800 dark:text-slate-100">{reflection.date}</h3>
+          <h3 className="font-semibold text-brand-950 dark:text-brand-50">{reflection.date}</h3>
           {reflection.name && (
-            <p className="text-xs text-slate-400 dark:text-slate-500">by {reflection.name}</p>
+            <p className="text-xs text-brand-400 dark:text-brand-400">by {reflection.name}</p>
           )}
         </div>
         <span className="text-lg">{feeling?.label}</span>
       </div>
 
       <div>
-        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">What did you do today?</p>
-        <p className="whitespace-pre-wrap text-slate-700 dark:text-slate-200">{reflection.whatDidYouDo}</p>
+        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">What did you do today?</p>
+        <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.whatDidYouDo}</p>
       </div>
 
       <div>
-        <p className="text-sm font-medium text-slate-500 dark:text-slate-400">How did you feel about it?</p>
-        <p className="whitespace-pre-wrap text-slate-700 dark:text-slate-200">{reflection.howDidYouFeel}</p>
+        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">How did you feel about it?</p>
+        <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.howDidYouFeel}</p>
       </div>
 
       {reflection.notes && (
         <div>
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Notes</p>
-          <p className="whitespace-pre-wrap text-slate-700 dark:text-slate-200">{reflection.notes}</p>
+          <p className="text-sm font-medium text-brand-600 dark:text-brand-300">Notes</p>
+          <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.notes}</p>
         </div>
       )}
 
@@ -59,20 +58,20 @@ export function ReflectionCard({ reflection }: ReflectionCardProps) {
         <button
           type="button"
           onClick={() => downloadReflection(reflection)}
-          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:scale-105 hover:bg-slate-100 active:scale-95 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
+          className="rounded-lg border border-brand-200 px-3 py-1.5 text-sm font-medium text-brand-700 transition hover:scale-105 hover:bg-brand-50 active:scale-95 dark:border-brand-700 dark:text-brand-100 dark:hover:bg-brand-800"
         >
           ⬇️ Download
         </button>
         <button
           type="button"
           onClick={handleCopy}
-          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:scale-105 hover:bg-slate-100 active:scale-95 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
+          className="rounded-lg border border-brand-200 px-3 py-1.5 text-sm font-medium text-brand-700 transition hover:scale-105 hover:bg-brand-50 active:scale-95 dark:border-brand-700 dark:text-brand-100 dark:hover:bg-brand-800"
         >
           {copied ? "✅ Copied" : "💬 Slack"}
         </button>
         <a
           href={mailtoReflection(reflection)}
-          className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:scale-105 hover:bg-slate-100 active:scale-95 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
+          className="rounded-lg border border-brand-200 px-3 py-1.5 text-sm font-medium text-brand-700 transition hover:scale-105 hover:bg-brand-50 active:scale-95 dark:border-brand-700 dark:text-brand-100 dark:hover:bg-brand-800"
         >
           ✉️ Email
         </a>

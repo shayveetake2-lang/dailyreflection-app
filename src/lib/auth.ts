@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   updateProfile,
@@ -29,6 +30,7 @@ export async function signUp(username: string, email: string, password: string) 
   const credential = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(credential.user, { displayName: username });
   await setDoc(usernameDoc(username), { uid: credential.user.uid, email });
+  await setDoc(doc(db, "users", credential.user.uid), { username, email });
   return credential;
 }
 
@@ -51,7 +53,13 @@ export async function signIn(identifier: string, password: string) {
   return signInWithEmailAndPassword(auth, email, password);
 }
 
+export async function requestPasswordReset(identifier: string) {
+  const email = await resolveIdentifierToEmail(identifier);
+  await sendPasswordResetEmail(auth, email);
+}
+
 export function signOut() {
   return firebaseSignOut(auth);
 }
+
 
