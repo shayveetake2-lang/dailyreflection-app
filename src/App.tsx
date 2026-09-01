@@ -1,122 +1,29 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import WeatherlineUI from './components/WeatherlineUI';
+import PocketFolioUI from './components/PocketFolioUI';
+import MoodTraceUI from './components/MoodTraceUI';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedUI, setSelectedUI] = useState<string>('weatherline');
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div style={{ fontFamily: 'sans-serif' }}>
+      <div style={{ padding: '20px', background: '#f0f0f0', borderBottom: '1px solid #ccc', textAlign: 'center' }}>
+        <h2>Daily Reflection App Concepts</h2>
+        <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px' }}>
+          <button onClick={() => setSelectedUI('weatherline')} style={{ padding: '8px 16px', fontWeight: selectedUI === 'weatherline' ? 'bold' : 'normal' }}>Weatherline</button>
+          <button onClick={() => setSelectedUI('pocketfolio')} style={{ padding: '8px 16px', fontWeight: selectedUI === 'pocketfolio' ? 'bold' : 'normal' }}>Pocket Folio</button>
+          <button onClick={() => setSelectedUI('moodtrace')} style={{ padding: '8px 16px', fontWeight: selectedUI === 'moodtrace' ? 'bold' : 'normal' }}>Mood Trace</button>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      </div>
+      
+      <div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+        {selectedUI === 'weatherline' && <WeatherlineUI />}
+        {selectedUI === 'pocketfolio' && <PocketFolioUI />}
+        {selectedUI === 'moodtrace' && <MoodTraceUI />}
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;

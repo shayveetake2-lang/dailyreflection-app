@@ -1,4 +1,7 @@
 import { initializeApp } from "firebase/app";
+import { isSupported, getAnalytics, type Analytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   projectId: "daily-reflection-app-143d9",
@@ -11,3 +14,13 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// Analytics isn't supported in all environments (e.g. SSR, unsupported browsers), so init lazily.
+export let analytics: Analytics | undefined;
+isSupported().then((supported) => {
+  if (supported) {
+    analytics = getAnalytics(app);
+  }
+});

@@ -1,0 +1,129 @@
+
+    @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wdth,wght@75..100,400..700&family=Literata:opsz,wght@7..72,400..600&display=swap');
+
+  .weatherline-app {
+    --paper: #E7ECE8;
+    --ink: #202923;
+    --blue: #687B84;
+    --moss: #68755F;
+    --gold: #D69A32;
+    --muted: #59635E;
+    --line: rgba(89, 99, 94, .30);
+    --line-soft: rgba(89, 99, 94, .18);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Afacad Flux', sans-serif;
+  }
+
+  .weatherline-app[data-mood='drained'] { --paper: #E8EDEB; }
+  .weatherline-app[data-mood='low'] { --paper: #E7ECEB; }
+  .weatherline-app[data-mood='steady'] { --paper: #E7ECE8; }
+  .weatherline-app[data-mood='light'] { --paper: #E9EDE6; }
+  .weatherline-app[data-mood='energized'] { --paper: #ECEEE3; }
+
+  .weatherline-rule {
+    transform: rotate(-6deg);
+    transform-origin: center;
+  }
+
+  .mood-point {
+    transition: color 160ms ease, transform 160ms ease;
+  }
+
+  .mood-shape {
+    width: 14px;
+    height: 14px;
+    display: block;
+    flex: none;
+    border: 2px solid var(--ink);
+    transition: width 160ms ease, height 160ms ease, outline-color 160ms ease;
+  }
+
+  .mood-point.is-selected .mood-shape {
+    width: 17px;
+    height: 17px;
+    outline: 1px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .mood-point.is-selected .mood-label {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .shape-square {
+    background: var(--blue);
+    border-radius: 2px;
+  }
+
+  .shape-diamond {
+    background: var(--blue);
+    border-radius: 1px;
+    transform: rotate(45deg);
+  }
+
+  .shape-circle {
+    background: var(--moss);
+    border-radius: 999px;
+  }
+
+  .shape-triangle {
+    background: var(--gold);
+    border: 0;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+
+  .shape-ring {
+    background: transparent;
+    border-color: var(--gold);
+    border-radius: 999px;
+  }
+
+  .journal-copy,
+  .journal-field {
+    font-family: 'Literata', serif;
+  }
+
+  .journal-field::placeholder {
+    color: var(--muted);
+    opacity: .76;
+  }
+
+  .plot-dot {
+    transform: translate(-50%, -50%);
+  }
+
+  .plot-dot.is-missing {
+    display: none;
+  }
+
+  .switch-track {
+    background: var(--moss);
+  }
+
+  .switch-track.is-off {
+    background: var(--muted);
+  }
+
+  .switch-knob {
+    transform: translateX(18px);
+    transition: transform 160ms ease;
+  }
+
+  .switch-track.is-off .switch-knob {
+    transform: translateX(2px);
+  }
+
+  .bottom-nav .nav-item {
+    position: relative;
+  }
+
+  .bottom-nav .nav-item.is-active::after {
+    content: '';
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+    transform: rotate(-6deg);
+  }
