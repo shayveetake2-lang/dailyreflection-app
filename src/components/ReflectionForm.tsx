@@ -103,7 +103,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
             {OVERALL_FEELING_OPTIONS.map((option) => (
               <label
                 key={option.value}
-                className={`peer relative flex cursor-pointer items-center justify-center rounded-xl border border-brand-200 bg-brand-50/40 px-2 py-2.5 text-xl transition hover:scale-105 hover:shadow-sm dark:border-brand-700 dark:bg-brand-900 ${FEELING_STYLES[option.value]}`}
+                className="relative cursor-pointer"
               >
                 <input
                   type="radio"
@@ -113,7 +113,12 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
                   onChange={() => setOverallFeeling(option.value)}
                   className="peer sr-only"
                 />
-                <span title={option.label}>{option.label.split(" ")[0]}</span>
+                <span
+                  title={option.label}
+                  className={`flex items-center justify-center rounded-xl border border-brand-200 bg-brand-50/40 px-2 py-2.5 text-xl transition hover:scale-105 hover:shadow-sm dark:border-brand-700 dark:bg-brand-900 ${FEELING_STYLES[option.value]}`}
+                >
+                  {option.label.split(" ")[0]}
+                </span>
               </label>
             ))}
           </div>
