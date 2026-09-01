@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/*
+  Tailwind v4 uses @media (prefers-color-scheme) for `dark:` by default.
+  Override it to use the `.dark` class strategy so the manual toggle works.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

@@ -1,8 +1,7 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import {
   signInWithPopup,
   signOut,
@@ -81,6 +80,7 @@ export default function Home() {
   // Auth state
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [signInError, setSignInError] = useState("");
 
   // Form state
   const [date] = useState(getTodayDate());
@@ -90,12 +90,18 @@ export default function Home() {
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
+  const [saveError, setSaveError] = useState("");
 
   // Reflections list
   const [reflections, setReflections] = useState([]);
+  const [reflectionsError, setReflectionsError] = useState("");
 
-  // Auth listener
+  // Auth listener — only subscribe when auth is available (client-side)
   useEffect(() => {
+    if (!auth) {
+      setAuthLoading(false);
+      return;
+    }
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
       setAuthLoading(false);
@@ -103,33 +109,46 @@ export default function Home() {
     return unsub;
   }, []);
 
-  // Firestore listener
+  // Firestore real-time listener
   useEffect(() => {
-    if (!user) {
+    if (!user || !db) {
       setReflections([]);
       return;
     }
+    setReflectionsError("");
     const q = query(
       collection(db, "users", user.uid, "reflections"),
       orderBy("createdAt", "desc")
     );
-    const unsub = onSnapshot(q, (snap) => {
-      setReflections(
-        snap.docs.map((d) => ({ id: d.id, ...d.data() }))
-      );
-    });
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        setReflections(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+        setReflectionsError("");
+      },
+      (err) => {
+        console.error("Firestore snapshot error:", err);
+        setReflectionsError(
+          "Could not load reflections. Check your Firestore rules and connection."
+        );
+      }
+    );
     return unsub;
   }, [user]);
 
   const handleSignIn = useCallback(async () => {
+    if (!auth) return;
+    setSignInError("");
     try {
       await signInWithPopup(auth, provider);
     } catch (err) {
       console.error(err);
+      setSignInError("Sign-in failed. Please try again.");
     }
   }, []);
 
   const handleSignOut = useCallback(async () => {
+    if (!auth) return;
     try {
       await signOut(auth);
     } catch (err) {
@@ -140,8 +159,9 @@ export default function Home() {
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
-      if (!user) return;
+      if (!user || !db) return;
       setSubmitting(true);
+      setSaveError("");
       try {
         await addDoc(collection(db, "users", user.uid, "reflections"), {
           date,
@@ -159,6 +179,7 @@ export default function Home() {
         setTimeout(() => setSuccessMsg(""), 3000);
       } catch (err) {
         console.error(err);
+        setSaveError("Failed to save. Check your connection and try again.");
       } finally {
         setSubmitting(false);
       }
@@ -166,7 +187,7 @@ export default function Home() {
     [user, date, activity, feelings, mood, notes]
   );
 
-  // ── UI ──────────────────────────────────────────────────────────────────────
+  // ── Styles ──────────────────────────────────────────────────────────────────
 
   const inputCls =
     "w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition";
@@ -203,7 +224,7 @@ export default function Home() {
 
       <div className="max-w-2xl mx-auto px-4 py-8">
         {authLoading ? (
-          <p className="text-center text-slate-400">Loading…</p>
+          <p className="text-center text-slate-400 mt-24">Loading…</p>
         ) : !user ? (
           /* ── Sign-in screen ── */
           <div className="flex flex-col items-center gap-6 mt-24">
@@ -213,15 +234,19 @@ export default function Home() {
             <p className="text-slate-500 dark:text-slate-400 text-sm">
               Sign in to start tracking your daily reflections.
             </p>
+            {signInError && (
+              <p className="text-red-500 text-sm">{signInError}</p>
+            )}
             <button
               onClick={handleSignIn}
               className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 shadow hover:shadow-md transition text-sm font-medium"
             >
-              <img
+              <Image
                 src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                 alt="Google"
                 width={20}
                 height={20}
+                unoptimized
               />
               Sign in with Google
             </button>
@@ -299,6 +324,9 @@ export default function Home() {
                 {successMsg && (
                   <p className="text-green-500 text-sm">{successMsg}</p>
                 )}
+                {saveError && (
+                  <p className="text-red-500 text-sm">{saveError}</p>
+                )}
                 <button
                   type="submit"
                   disabled={submitting}
@@ -314,7 +342,10 @@ export default function Home() {
               <h2 className="text-xl font-semibold mb-4 text-blue-600 dark:text-blue-400">
                 Past Reflections
               </h2>
-              {reflections.length === 0 ? (
+              {reflectionsError && (
+                <p className="text-red-500 text-sm mb-4">{reflectionsError}</p>
+              )}
+              {reflections.length === 0 && !reflectionsError ? (
                 <p className="text-slate-400 text-sm">
                   No reflections yet. Add your first one above!
                 </p>
@@ -334,15 +365,11 @@ export default function Home() {
                           </span>
                           <span className="text-sm">{moodLabel}</span>
                         </div>
-                        <p className="text-sm font-medium mb-1">
-                          What I did:
-                        </p>
+                        <p className="text-sm font-medium mb-1">What I did:</p>
                         <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 whitespace-pre-wrap">
                           {r.activity}
                         </p>
-                        <p className="text-sm font-medium mb-1">
-                          How I felt:
-                        </p>
+                        <p className="text-sm font-medium mb-1">How I felt:</p>
                         <p className="text-sm text-slate-600 dark:text-slate-300 mb-3 whitespace-pre-wrap">
                           {r.feelings}
                         </p>
