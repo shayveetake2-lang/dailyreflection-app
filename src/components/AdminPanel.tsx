@@ -72,13 +72,13 @@ export function AdminPanel({ currentUid, onClose }: AdminPanelProps) {
   };
 
   return (
-    <div className="min-h-screen bg-brand-100/60 dark:bg-brand-950 sm:flex sm:items-center sm:justify-center sm:py-6">
-      <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-gradient-to-b from-brand-50 to-white text-brand-950 dark:from-brand-950 dark:to-brand-900 dark:text-brand-50 sm:min-h-[850px] sm:max-w-[430px] sm:rounded-[2.5rem] sm:border sm:border-brand-200 sm:shadow-2xl sm:shadow-brand-900/10 dark:sm:border-brand-800">
-        <header
-          className="sticky top-0 z-10 flex items-center justify-between border-b border-brand-100 bg-white/70 px-4 pb-4 backdrop-blur-md dark:border-brand-800 dark:bg-brand-900/70"
-          style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}
-        >
-          <h1 className="text-lg font-semibold text-brand-950 dark:text-brand-50">Admin panel</h1>
+    <div className="relative min-h-screen bg-gradient-to-b from-brand-50 to-white text-brand-950 dark:from-brand-950 dark:to-brand-900 dark:text-brand-50">
+      <header
+        className="sticky top-0 z-10 border-b border-brand-100 bg-white/70 backdrop-blur-md dark:border-brand-800 dark:bg-brand-900/70"
+        style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}
+      >
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 pb-4 sm:px-6">
+          <h1 className="text-lg font-semibold text-brand-950 dark:text-brand-50 sm:text-xl">Admin panel</h1>
           <button
             type="button"
             onClick={onClose}
@@ -86,12 +86,13 @@ export function AdminPanel({ currentUid, onClose }: AdminPanelProps) {
           >
             Back to app
           </button>
-        </header>
+        </div>
+      </header>
 
-        <div
-          className="momentum-scroll relative flex flex-1 flex-col gap-6 overflow-y-auto px-4 pt-4"
-          style={{ paddingBottom: 'max(2rem, calc(1rem + env(safe-area-inset-bottom)))' }}
-        >
+      <div
+        className="momentum-scroll relative mx-auto flex max-w-4xl flex-col gap-6 px-4 pt-4 sm:px-6"
+        style={{ paddingBottom: 'max(2rem, calc(1rem + env(safe-area-inset-bottom)))' }}
+      >
         <p className="text-sm text-brand-700 dark:text-brand-200">
           Passwords can't be set directly for security reasons — send a reset email so the user can choose their own.
         </p>
@@ -167,7 +168,6 @@ export function AdminPanel({ currentUid, onClose }: AdminPanelProps) {
             </table>
           </div>
         )}
-        </div>
       </div>
     </div>
   );

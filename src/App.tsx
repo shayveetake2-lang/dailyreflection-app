@@ -114,15 +114,18 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-100/60 dark:bg-brand-950 sm:flex sm:items-center sm:justify-center sm:py-6">
-      <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-gradient-to-b from-brand-50 to-white text-brand-950 dark:from-brand-950 dark:to-brand-900 dark:text-brand-50 sm:min-h-[850px] sm:max-w-[430px] sm:rounded-[2.5rem] sm:border sm:border-brand-200 sm:shadow-2xl sm:shadow-brand-900/10 dark:sm:border-brand-800">
-        <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl dark:bg-brand-700/15" />
-        <div className="pointer-events-none absolute -right-24 top-64 h-72 w-72 rounded-full bg-accent-100/40 blur-3xl dark:bg-accent-900/15" />
+    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-b from-brand-50 to-white text-brand-950 dark:from-brand-950 dark:to-brand-900 dark:text-brand-50">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl dark:bg-brand-700/15" />
+      <div className="pointer-events-none absolute -right-24 top-64 h-72 w-72 rounded-full bg-accent-100/40 blur-3xl dark:bg-accent-900/15" />
 
-        <header className="sticky top-0 z-10 flex items-center justify-between border-b border-brand-100 bg-white/70 px-4 pb-4 backdrop-blur-md dark:border-brand-800 dark:bg-brand-900/70" style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}>
+      <header
+        className="sticky top-0 z-10 border-b border-brand-100 bg-white/70 backdrop-blur-md dark:border-brand-800 dark:bg-brand-900/70"
+        style={{ paddingTop: 'max(1rem, env(safe-area-inset-top))' }}
+      >
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-4 pb-4 sm:px-6">
           <div>
-            <h1 className="text-lg font-semibold leading-tight text-brand-950 dark:text-brand-50">Daily Reflection</h1>
-            <p className="mt-0.5 text-xs leading-tight text-brand-600 dark:text-brand-300">
+            <h1 className="text-lg font-semibold leading-tight text-brand-950 dark:text-brand-50 sm:text-xl">Daily Reflection</h1>
+            <p className="mt-0.5 text-xs leading-tight text-brand-600 dark:text-brand-300 sm:text-sm">
               {displayName ? `Welcome back, ${displayName} 👋` : 'A calm space to reflect on your day'}
             </p>
           </div>
@@ -157,72 +160,96 @@ function App() {
               ⏻
             </button>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <div className="momentum-scroll relative flex flex-1 flex-col overflow-y-auto">
-          <div className="flex flex-col gap-3 px-4 pt-4">
-            {bootstrapAvailable && !isAdmin && (
-              <button
-                type="button"
-                onClick={handleClaimAdmin}
-                className="animate-fade-in self-start text-xs font-medium text-brand-500 underline-offset-2 transition hover:text-brand-700 hover:underline dark:text-brand-400 dark:hover:text-brand-200"
-              >
-                Claim admin access (first-time setup)
-              </button>
-            )}
+      <div className="momentum-scroll relative mx-auto flex max-w-4xl flex-col">
+        <div className="flex flex-col gap-3 px-4 pt-4 sm:px-6 lg:hidden">
+          {bootstrapAvailable && !isAdmin && (
+            <button
+              type="button"
+              onClick={handleClaimAdmin}
+              className="animate-fade-in self-start text-xs font-medium text-brand-500 underline-offset-2 transition hover:text-brand-700 hover:underline dark:text-brand-400 dark:hover:text-brand-200"
+            >
+              Claim admin access (first-time setup)
+            </button>
+          )}
 
-            {error && (
-              <p className="animate-fade-in rounded-lg bg-accent-50 px-4 py-2 text-sm text-accent-700 dark:bg-accent-950 dark:text-accent-100">
-                {error}
-              </p>
-            )}
+          {error && (
+            <p className="animate-fade-in rounded-lg bg-accent-50 px-4 py-2 text-sm text-accent-700 dark:bg-accent-950 dark:text-accent-100">
+              {error}
+            </p>
+          )}
 
-            <div className="flex gap-1 rounded-full border border-brand-100 bg-brand-50/60 p-1 dark:border-brand-800 dark:bg-brand-950/60">
-              <button
-                type="button"
-                onClick={() => setTab('today')}
-                className={`flex-1 rounded-full px-3 py-1.5 text-sm font-medium transition ${
-                  tab === 'today'
-                    ? 'bg-white text-brand-800 shadow-sm dark:bg-brand-900 dark:text-brand-50'
-                    : 'text-brand-500 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-200'
-                }`}
-              >
-                Today
-              </button>
-              <button
-                type="button"
-                onClick={() => setTab('history')}
-                className={`flex-1 rounded-full px-3 py-1.5 text-sm font-medium transition ${
-                  tab === 'history'
-                    ? 'bg-white text-brand-800 shadow-sm dark:bg-brand-900 dark:text-brand-50'
-                    : 'text-brand-500 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-200'
-                }`}
-              >
-                History {reflections.length > 0 && `(${reflections.length})`}
-              </button>
-            </div>
+          <div className="flex gap-1 rounded-full border border-brand-100 bg-brand-50/60 p-1 dark:border-brand-800 dark:bg-brand-950/60">
+            <button
+              type="button"
+              onClick={() => setTab('today')}
+              className={`flex-1 rounded-full px-3 py-1.5 text-sm font-medium transition ${
+                tab === 'today'
+                  ? 'bg-white text-brand-800 shadow-sm dark:bg-brand-900 dark:text-brand-50'
+                  : 'text-brand-500 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-200'
+              }`}
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              onClick={() => setTab('history')}
+              className={`flex-1 rounded-full px-3 py-1.5 text-sm font-medium transition ${
+                tab === 'history'
+                  ? 'bg-white text-brand-800 shadow-sm dark:bg-brand-900 dark:text-brand-50'
+                  : 'text-brand-500 hover:text-brand-700 dark:text-brand-400 dark:hover:text-brand-200'
+              }`}
+            >
+              History {reflections.length > 0 && `(${reflections.length})`}
+            </button>
+          </div>
+        </div>
+
+        <div className="hidden px-4 pt-4 sm:px-6 lg:block">
+          {bootstrapAvailable && !isAdmin && (
+            <button
+              type="button"
+              onClick={handleClaimAdmin}
+              className="animate-fade-in text-xs font-medium text-brand-500 underline-offset-2 transition hover:text-brand-700 hover:underline dark:text-brand-400 dark:hover:text-brand-200"
+            >
+              Claim admin access (first-time setup)
+            </button>
+          )}
+
+          {error && (
+            <p className="animate-fade-in mt-2 rounded-lg bg-accent-50 px-4 py-2 text-sm text-accent-700 dark:bg-accent-950 dark:text-accent-100">
+              {error}
+            </p>
+          )}
+        </div>
+
+        <div
+          className="animate-fade-in grid grid-cols-1 gap-6 px-4 pt-4 sm:px-6 lg:grid-cols-2 lg:items-start lg:gap-8"
+          style={{ paddingBottom: 'max(2rem, calc(1rem + env(safe-area-inset-bottom)))' }}
+        >
+          <div className={tab === 'today' ? 'block' : 'hidden lg:block'}>
+            <ReflectionForm defaultName={displayName} onSubmit={handleSubmit} onNameChange={handleNameChange} />
           </div>
 
-          <div className="animate-fade-in flex flex-col gap-6 px-4 pt-4" style={{ paddingBottom: 'max(2rem, calc(1rem + env(safe-area-inset-bottom)))' }}>
-            {tab === 'today' && (
-              <ReflectionForm defaultName={displayName} onSubmit={handleSubmit} onNameChange={handleNameChange} />
-            )}
-
-            {tab === 'history' && (
-              <section className="flex flex-col gap-4">
-                {loading && (
-                  <div className="h-6 w-6 animate-spin self-center rounded-full border-2 border-brand-200 border-t-brand-600 dark:border-brand-700" />
-                )}
-                {!loading && reflections.length === 0 && (
-                  <p className="text-sm text-brand-600 dark:text-brand-300">
-                    No reflections yet — switch to Today to write your first one.
-                  </p>
-                )}
-                {reflections.map((reflection) => (
-                  <ReflectionCard key={reflection.id} reflection={reflection} />
-                ))}
-              </section>
-            )}
+          <div className={tab === 'history' ? 'block' : 'hidden lg:block'}>
+            <section className="flex flex-col gap-4">
+              <h2 className="hidden text-lg font-semibold text-brand-800 dark:text-brand-200 lg:block">
+                Past reflections {reflections.length > 0 && `(${reflections.length})`}
+              </h2>
+              {loading && (
+                <div className="h-6 w-6 animate-spin self-center rounded-full border-2 border-brand-200 border-t-brand-600 dark:border-brand-700" />
+              )}
+              {!loading && reflections.length === 0 && (
+                <p className="text-sm text-brand-600 dark:text-brand-300">
+                  No reflections yet — write your first one to see it here.
+                </p>
+              )}
+              {reflections.map((reflection) => (
+                <ReflectionCard key={reflection.id} reflection={reflection} />
+              ))}
+            </section>
           </div>
         </div>
       </div>
@@ -231,6 +258,7 @@ function App() {
 }
 
 export default App
+
 
 
 

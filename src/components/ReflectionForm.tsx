@@ -14,6 +14,7 @@ const FEELING_STYLES: Record<OverallFeeling, string> = {
   good: "peer-checked:border-blue-400 peer-checked:bg-blue-50 peer-checked:ring-2 peer-checked:ring-blue-200 dark:peer-checked:bg-blue-950/40 dark:peer-checked:ring-blue-900",
   okay: "peer-checked:border-amber-400 peer-checked:bg-amber-50 peer-checked:ring-2 peer-checked:ring-amber-200 dark:peer-checked:bg-amber-950/40 dark:peer-checked:ring-amber-900",
   bad: "peer-checked:border-rose-400 peer-checked:bg-rose-50 peer-checked:ring-2 peer-checked:ring-rose-200 dark:peer-checked:bg-rose-950/40 dark:peer-checked:ring-rose-900",
+  awful: "peer-checked:border-accent-600 peer-checked:bg-accent-50 peer-checked:ring-2 peer-checked:ring-accent-100 dark:peer-checked:bg-accent-950/40 dark:peer-checked:ring-accent-900",
 };
 
 function todayISODate() {
@@ -98,7 +99,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
 
         <div className="flex flex-col gap-1">
           <span className="text-sm font-medium text-brand-700 dark:text-brand-200">Overall feeling</span>
-          <div className="grid grid-cols-4 gap-1.5">
+          <div className="grid grid-cols-5 gap-1.5">
             {OVERALL_FEELING_OPTIONS.map((option) => (
               <label
                 key={option.value}

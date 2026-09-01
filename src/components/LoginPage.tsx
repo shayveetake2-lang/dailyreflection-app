@@ -66,18 +66,17 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-100/60 dark:bg-brand-950 sm:flex sm:items-center sm:justify-center sm:py-6">
-      <div
-        className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-brand-50 via-white to-brand-100 px-4 dark:from-brand-950 dark:via-brand-950 dark:to-brand-900 sm:min-h-[850px] sm:max-w-[430px] sm:rounded-[2.5rem] sm:border sm:border-brand-200 sm:shadow-2xl sm:shadow-brand-900/10 dark:sm:border-brand-800"
-        style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}
-      >
-        <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand-200/50 blur-3xl dark:bg-brand-700/20" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-accent-100/50 blur-3xl dark:bg-accent-900/20" />
+    <div
+      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-brand-50 via-white to-brand-100 px-4 dark:from-brand-950 dark:via-brand-950 dark:to-brand-900"
+      style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}
+    >
+      <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-brand-200/50 blur-3xl dark:bg-brand-700/20" />
+      <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-accent-100/50 blur-3xl dark:bg-accent-900/20" />
 
-        <div className="animate-fade-in relative w-full max-w-sm rounded-3xl border border-brand-100 bg-white/80 p-7 shadow-xl shadow-brand-900/5 backdrop-blur-sm transition dark:border-brand-800 dark:bg-brand-900/80">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-2xl dark:bg-brand-800">
-            🌿
-          </div>
+      <div className="animate-fade-in relative w-full max-w-sm rounded-3xl border border-brand-100 bg-white/80 p-7 shadow-xl shadow-brand-900/5 backdrop-blur-sm transition dark:border-brand-800 dark:bg-brand-900/80">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-2xl dark:bg-brand-800">
+          🌿
+        </div>
           <h1 className="mt-3 text-center text-xl font-semibold text-brand-950 dark:text-brand-50">Daily Reflection</h1>
           <p className="mt-1 text-center text-sm text-brand-600 dark:text-brand-300">
             A calm, private space to jot down what you did each day, how it felt, and look back on past entries.
@@ -220,7 +219,6 @@ export function LoginPage() {
         >
           {mode === "signUp" ? "Already have an account? Sign in" : "Need an account? Sign up"}
         </button>
-        </div>
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
-export type OverallFeeling = "great" | "good" | "okay" | "bad";
+export type OverallFeeling = "great" | "good" | "okay" | "bad" | "awful";
 
 export const OVERALL_FEELING_OPTIONS: { value: OverallFeeling; label: string }[] = [
   { value: "great", label: "🤩 Great" },
   { value: "good", label: "🙂 Good" },
   { value: "okay", label: "😐 Okay" },
   { value: "bad", label: "😔 Bad" },
+  { value: "awful", label: "😢 Awful" },
 ];
 
 export interface Reflection {

@@ -10,7 +10,8 @@ const FEELING_ACCENT: Record<OverallFeeling, string> = {
   great: "border-l-emerald-400",
   good: "border-l-brand-400",
   okay: "border-l-amber-400",
-  bad: "border-l-accent-600",
+  bad: "border-l-rose-400",
+  awful: "border-l-accent-600",
 };
 
 export function ReflectionCard({ reflection }: ReflectionCardProps) {
