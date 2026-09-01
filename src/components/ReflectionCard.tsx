@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { OVERALL_FEELING_OPTIONS, type OverallFeeling, type Reflection } from "../types";
 import { copyReflectionForSlack, downloadReflection, mailtoReflection } from "../lib/share";
+import { formatReflectionDate } from "../lib/date";
 
 interface ReflectionCardProps {
   reflection: Reflection;
@@ -30,7 +31,7 @@ export function ReflectionCard({ reflection }: ReflectionCardProps) {
     >
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-semibold text-brand-950 dark:text-brand-50">{reflection.date}</h3>
+          <h3 className="font-semibold text-brand-950 dark:text-brand-50">{formatReflectionDate(reflection.date)}</h3>
           {reflection.name && (
             <p className="text-xs text-brand-400 dark:text-brand-400">by {reflection.name}</p>
           )}

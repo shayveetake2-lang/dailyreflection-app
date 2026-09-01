@@ -1,12 +1,14 @@
 import { OVERALL_FEELING_OPTIONS, type Reflection } from "../types";
+import { formatReflectionDate } from "./date";
 
 function feelingLabel(reflection: Reflection) {
   return OVERALL_FEELING_OPTIONS.find((o) => o.value === reflection.overallFeeling)?.label ?? reflection.overallFeeling;
 }
 
 export function formatReflection(reflection: Reflection): string {
+  const formattedDate = formatReflectionDate(reflection.date);
   return [
-    `Daily Reflection — ${reflection.date}`,
+    `Daily Reflection — ${formattedDate}`,
     ...(reflection.name ? [`By: ${reflection.name}`] : []),
     `Overall feeling: ${feelingLabel(reflection)}`,
     "",
@@ -25,7 +27,7 @@ export function downloadReflection(reflection: Reflection) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = `reflection-${reflection.date}.txt`;
+  link.download = `reflection-${formatReflectionDate(reflection.date).replaceAll("/", "-")}.txt`;
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -37,7 +39,7 @@ export async function copyReflectionForSlack(reflection: Reflection) {
 }
 
 export function mailtoReflection(reflection: Reflection): string {
-  const subject = encodeURIComponent(`Daily Reflection — ${reflection.date}`);
+  const subject = encodeURIComponent(`Daily Reflection — ${formatReflectionDate(reflection.date)}`);
   const body = encodeURIComponent(formatReflection(reflection));
   return `mailto:?subject=${subject}&body=${body}`;
 }
