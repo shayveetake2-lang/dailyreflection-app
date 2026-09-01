@@ -12,8 +12,9 @@ export interface Reflection {
   id: string;
   name: string;
   date: string; // YYYY-MM-DD
-  whatDidYouDo: string;
-  howDidYouFeel: string;
+  whatILearntToday: string;
+  howIFeltAboutToday: string;
+  oneGoalForTomorrow: string;
   overallFeeling: OverallFeeling;
   notes: string;
   createdAt: number;

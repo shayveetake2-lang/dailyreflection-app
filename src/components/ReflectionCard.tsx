@@ -39,14 +39,21 @@ export function ReflectionCard({ reflection }: ReflectionCardProps) {
       </div>
 
       <div>
-        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">What did you do today?</p>
-        <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.whatDidYouDo}</p>
+        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">What I learnt today</p>
+        <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.whatILearntToday}</p>
       </div>
 
       <div>
-        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">How did you feel about it?</p>
-        <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.howDidYouFeel}</p>
+        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">How I felt about today</p>
+        <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.howIFeltAboutToday}</p>
       </div>
+
+      {reflection.oneGoalForTomorrow && (
+        <div>
+          <p className="text-sm font-medium text-brand-600 dark:text-brand-300">One goal for tomorrow</p>
+          <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.oneGoalForTomorrow}</p>
+        </div>
+      )}
 
       {reflection.notes && (
         <div>

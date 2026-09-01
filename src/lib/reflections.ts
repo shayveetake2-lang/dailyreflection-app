@@ -13,8 +13,9 @@ import type { OverallFeeling, Reflection } from "../types";
 export interface NewReflection {
   name: string;
   date: string;
-  whatDidYouDo: string;
-  howDidYouFeel: string;
+  whatILearntToday: string;
+  howIFeltAboutToday: string;
+  oneGoalForTomorrow: string;
   overallFeeling: OverallFeeling;
   notes: string;
 }
@@ -33,8 +34,9 @@ export function reflectionFromDoc(doc: QueryDocumentSnapshot): Reflection {
     id: doc.id,
     name: data.name ?? "",
     date: data.date ?? "",
-    whatDidYouDo: data.whatDidYouDo ?? "",
-    howDidYouFeel: data.howDidYouFeel ?? "",
+    whatILearntToday: data.whatILearntToday ?? data.whatDidYouDo ?? "",
+    howIFeltAboutToday: data.howIFeltAboutToday ?? data.howDidYouFeel ?? "",
+    oneGoalForTomorrow: data.oneGoalForTomorrow ?? "",
     overallFeeling: data.overallFeeling ?? "okay",
     notes: data.notes ?? "",
     createdAt,

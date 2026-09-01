@@ -10,11 +10,12 @@ export function formatReflection(reflection: Reflection): string {
     ...(reflection.name ? [`By: ${reflection.name}`] : []),
     `Overall feeling: ${feelingLabel(reflection)}`,
     "",
-    "What did you do today?",
-    reflection.whatDidYouDo,
+    "What I learnt today",
+    reflection.whatILearntToday,
     "",
-    "How did you feel about it?",
-    reflection.howDidYouFeel,
+    "How I felt about today",
+    reflection.howIFeltAboutToday,
+    ...(reflection.oneGoalForTomorrow ? ["", "One goal for tomorrow", reflection.oneGoalForTomorrow] : []),
     ...(reflection.notes ? ["", "Notes", reflection.notes] : []),
   ].join("\n");
 }

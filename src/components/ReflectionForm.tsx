@@ -28,8 +28,9 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
   const [name, setName] = useState(defaultName);
   const [syncedDefaultName, setSyncedDefaultName] = useState(defaultName);
   const [date, setDate] = useState(todayISODate);
-  const [whatDidYouDo, setWhatDidYouDo] = useState("");
-  const [howDidYouFeel, setHowDidYouFeel] = useState("");
+  const [whatILearntToday, setWhatILearntToday] = useState("");
+  const [howIFeltAboutToday, setHowIFeltAboutToday] = useState("");
+  const [oneGoalForTomorrow, setOneGoalForTomorrow] = useState("");
   const [overallFeeling, setOverallFeeling] = useState<OverallFeeling>("okay");
   const [notes, setNotes] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -42,16 +43,25 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !whatDidYouDo.trim() || !howDidYouFeel.trim()) return;
+    if (!name.trim() || !whatILearntToday.trim() || !howIFeltAboutToday.trim()) return;
 
     setSubmitting(true);
     try {
-      await onSubmit({ name: name.trim(), date, whatDidYouDo, howDidYouFeel, overallFeeling, notes });
+      await onSubmit({
+        name: name.trim(),
+        date,
+        whatILearntToday,
+        howIFeltAboutToday,
+        oneGoalForTomorrow,
+        overallFeeling,
+        notes,
+      });
       if (name.trim() !== defaultName) {
         onNameChange(name.trim());
       }
-      setWhatDidYouDo("");
-      setHowDidYouFeel("");
+      setWhatILearntToday("");
+      setHowIFeltAboutToday("");
+      setOneGoalForTomorrow("");
       setOverallFeeling("okay");
       setNotes("");
       setDate(todayISODate());
@@ -126,29 +136,45 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="whatDidYouDo" className="text-sm font-medium text-brand-700 dark:text-brand-200">
-          What did you do today?
+        <label htmlFor="whatILearntToday" className="text-sm font-medium text-brand-700 dark:text-brand-200">
+          What I learnt today
         </label>
         <textarea
-          id="whatDidYouDo"
-          value={whatDidYouDo}
-          onChange={(e) => setWhatDidYouDo(e.target.value)}
+          id="whatILearntToday"
+          value={whatILearntToday}
+          onChange={(e) => setWhatILearntToday(e.target.value)}
           required
           rows={3}
+          placeholder="What I learnt today"
           className={inputClasses}
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="howDidYouFeel" className="text-sm font-medium text-brand-700 dark:text-brand-200">
-          How did you feel about it?
+        <label htmlFor="howIFeltAboutToday" className="text-sm font-medium text-brand-700 dark:text-brand-200">
+          How I felt about today
         </label>
         <textarea
-          id="howDidYouFeel"
-          value={howDidYouFeel}
-          onChange={(e) => setHowDidYouFeel(e.target.value)}
+          id="howIFeltAboutToday"
+          value={howIFeltAboutToday}
+          onChange={(e) => setHowIFeltAboutToday(e.target.value)}
           required
           rows={3}
+          placeholder="How I felt about today"
+          className={inputClasses}
+        />
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="oneGoalForTomorrow" className="text-sm font-medium text-brand-700 dark:text-brand-200">
+          One goal for tomorrow
+        </label>
+        <textarea
+          id="oneGoalForTomorrow"
+          value={oneGoalForTomorrow}
+          onChange={(e) => setOneGoalForTomorrow(e.target.value)}
+          rows={2}
+          placeholder="One goal for tomorrow"
           className={inputClasses}
         />
       </div>
