@@ -79,3 +79,4 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
     </dialog>
   );
 }
+
