@@ -19,3 +19,5 @@ export interface Reflection {
   notes: string;
   createdAt: number;
 }
+
+export type NewReflection = Omit<Reflection, "id" | "createdAt">;

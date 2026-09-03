@@ -1,20 +1,18 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { OVERALL_FEELING_OPTIONS, type OverallFeeling } from "../types";
-import type { NewReflection } from "../lib/reflections";
+import { OVERALL_FEELING_OPTIONS, type OverallFeeling, type NewReflection } from "../types";
 
 interface ReflectionFormProps {
   defaultName: string;
-  onSubmit: (reflection: NewReflection) => Promise<void>;
-  onNameChange: (name: string) => void;
+  onSubmit: (reflection: NewReflection) => void;
 }
 
 const FEELING_STYLES: Record<OverallFeeling, string> = {
-  great: "peer-checked:border-emerald-400 peer-checked:bg-emerald-50 peer-checked:ring-2 peer-checked:ring-emerald-200 dark:peer-checked:bg-emerald-950/40 dark:peer-checked:ring-emerald-900",
-  good: "peer-checked:border-blue-400 peer-checked:bg-blue-50 peer-checked:ring-2 peer-checked:ring-blue-200 dark:peer-checked:bg-blue-950/40 dark:peer-checked:ring-blue-900",
-  okay: "peer-checked:border-amber-400 peer-checked:bg-amber-50 peer-checked:ring-2 peer-checked:ring-amber-200 dark:peer-checked:bg-amber-950/40 dark:peer-checked:ring-amber-900",
-  bad: "peer-checked:border-rose-400 peer-checked:bg-rose-50 peer-checked:ring-2 peer-checked:ring-rose-200 dark:peer-checked:bg-rose-950/40 dark:peer-checked:ring-rose-900",
-  awful: "peer-checked:border-accent-600 peer-checked:bg-accent-50 peer-checked:ring-2 peer-checked:ring-accent-100 dark:peer-checked:bg-accent-950/40 dark:peer-checked:ring-accent-900",
+  great: "border-emerald-400 bg-emerald-50 ring-2 ring-emerald-200 dark:bg-emerald-950/40 dark:ring-emerald-900",
+  good: "border-blue-400 bg-blue-50 ring-2 ring-blue-200 dark:bg-blue-950/40 dark:ring-blue-900",
+  okay: "border-amber-400 bg-amber-50 ring-2 ring-amber-200 dark:bg-amber-950/40 dark:ring-amber-900",
+  bad: "border-rose-400 bg-rose-50 ring-2 ring-rose-200 dark:bg-rose-950/40 dark:ring-rose-900",
+  awful: "border-accent-600 bg-accent-50 ring-2 ring-accent-100 dark:bg-accent-950/40 dark:ring-accent-900",
 };
 
 function todayISODate() {
@@ -24,7 +22,7 @@ function todayISODate() {
 const inputClasses =
   "rounded-lg border border-brand-200 bg-brand-50/40 px-3 py-2 text-brand-950 transition focus:border-brand-400 focus:ring-2 focus:ring-brand-100 focus:outline-none dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50 dark:focus:ring-brand-900/40";
 
-export function ReflectionForm({ defaultName, onSubmit, onNameChange }: ReflectionFormProps) {
+export function ReflectionForm({ defaultName, onSubmit }: ReflectionFormProps) {
   const [name, setName] = useState(defaultName);
   const [syncedDefaultName, setSyncedDefaultName] = useState(defaultName);
   const [date, setDate] = useState(todayISODate);
@@ -47,7 +45,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
 
     setSubmitting(true);
     try {
-      await onSubmit({
+      onSubmit({
         name: name.trim(),
         date,
         whatILearntToday,
@@ -56,9 +54,6 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
         overallFeeling,
         notes,
       });
-      if (name.trim() !== defaultName) {
-        onNameChange(name.trim());
-      }
       setWhatILearntToday("");
       setHowIFeltAboutToday("");
       setOneGoalForTomorrow("");
@@ -113,7 +108,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
             {OVERALL_FEELING_OPTIONS.map((option) => (
               <label
                 key={option.value}
-                className="relative cursor-pointer"
+                className={`relative flex cursor-pointer items-center justify-center rounded-xl border px-2 py-2.5 text-xl transition hover:scale-105 hover:shadow-sm dark:border-brand-700 dark:bg-brand-900 ${overallFeeling === option.value ? FEELING_STYLES[option.value] : "border-brand-200 bg-brand-50/40"}`}
               >
                 <input
                   type="radio"
@@ -123,12 +118,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
                   onChange={() => setOverallFeeling(option.value)}
                   className="peer sr-only"
                 />
-                <span
-                  title={option.label}
-                  className={`flex items-center justify-center rounded-xl border border-brand-200 bg-brand-50/40 px-2 py-2.5 text-xl transition hover:scale-105 hover:shadow-sm dark:border-brand-700 dark:bg-brand-900 ${FEELING_STYLES[option.value]}`}
-                >
-                  {option.label.split(" ")[0]}
-                </span>
+                <span className="pointer-events-none" title={option.label}>{option.label.split(" ")[0]}</span>
               </label>
             ))}
           </div>
@@ -197,7 +187,7 @@ export function ReflectionForm({ defaultName, onSubmit, onNameChange }: Reflecti
         disabled={submitting}
         className="mt-1 rounded-lg bg-brand-600 px-4 py-2 font-medium text-white transition hover:bg-brand-700 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {submitting ? "Saving…" : justSaved ? "✅ Saved!" : "Save reflection"}
+        {submitting ? "Preparing…" : justSaved ? "✅ Added locally" : "Add reflection"}
       </button>
     </form>
   );
