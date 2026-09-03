@@ -40,7 +40,7 @@ export function ReflectionCard({ reflection }: ReflectionCardProps) {
       </div>
 
       <div>
-        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">What I learnt today</p>
+        <p className="text-sm font-medium text-brand-600 dark:text-brand-300">What did I learn today?</p>
         <p className="whitespace-pre-wrap text-brand-900 dark:text-brand-100">{reflection.whatILearntToday}</p>
       </div>
 

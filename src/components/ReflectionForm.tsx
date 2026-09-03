@@ -127,7 +127,7 @@ export function ReflectionForm({ defaultName, onSubmit }: ReflectionFormProps) {
 
       <div className="flex flex-col gap-1">
         <label htmlFor="whatILearntToday" className="text-sm font-medium text-brand-700 dark:text-brand-200">
-          What I learnt today
+          What did I learn today?
         </label>
         <textarea
           id="whatILearntToday"
@@ -135,7 +135,7 @@ export function ReflectionForm({ defaultName, onSubmit }: ReflectionFormProps) {
           onChange={(e) => setWhatILearntToday(e.target.value)}
           required
           rows={3}
-          placeholder="What I learnt today"
+          placeholder="What did I learn today?"
           className={inputClasses}
         />
       </div>
