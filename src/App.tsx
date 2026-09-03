@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { useTheme } from './hooks/useTheme'
 import { ReflectionForm } from './components/ReflectionForm'
 import { ReflectionCard } from './components/ReflectionCard'
+import { HelpModal } from './components/HelpModal'
 import type { NewReflection, Reflection } from './types'
 
 function App() {
   const { theme, toggleTheme } = useTheme()
   const [reflections, setReflections] = useState<Reflection[]>([])
   const [tab, setTab] = useState<'today' | 'history'>('today')
+  const [isHelpOpen, setIsHelpOpen] = useState(false)
 
   const handleSubmit = (reflection: NewReflection) => {
     setReflections((current) => [
@@ -28,9 +30,14 @@ function App() {
             <h1 className="text-lg font-semibold leading-tight text-brand-950 dark:text-brand-50 sm:text-xl">Daily Reflection</h1>
             <p className="mt-0.5 text-xs leading-tight text-brand-600 dark:text-brand-300 sm:text-sm">A private space to reflect on your day</p>
           </div>
-          <button type="button" onClick={toggleTheme} aria-label="Toggle dark mode" title="Toggle dark mode" className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-200 bg-white text-base shadow-sm transition hover:scale-105 hover:bg-brand-50 active:scale-95 dark:border-brand-700 dark:bg-brand-900 dark:hover:bg-brand-800">
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
+          <div className="flex items-center gap-2">
+            <button type="button" onClick={() => setIsHelpOpen(true)} aria-label="Help" title="Help" className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-200 bg-white text-base shadow-sm transition hover:scale-105 hover:bg-brand-50 active:scale-95 dark:border-brand-700 dark:bg-brand-900 dark:hover:bg-brand-800">
+              ❓
+            </button>
+            <button type="button" onClick={toggleTheme} aria-label="Toggle dark mode" title="Toggle dark mode" className="flex h-10 w-10 items-center justify-center rounded-full border border-brand-200 bg-white text-base shadow-sm transition hover:scale-105 hover:bg-brand-50 active:scale-95 dark:border-brand-700 dark:bg-brand-900 dark:hover:bg-brand-800">
+              {theme === 'dark' ? '☀️' : '🌙'}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -55,6 +62,8 @@ function App() {
           </div>
         </div>
       </div>
+
+      <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </div>
   )
 }
